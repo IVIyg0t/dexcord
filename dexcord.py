@@ -1,3 +1,5 @@
+from sys import prefix
+from typing import Optional
 import discord
 from discord.ext import commands
 import os
@@ -8,43 +10,48 @@ load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
 
+bot = commands.Bot(command_prefix="!")
 
-class Dexcord(discord.Client):
-    dex = DexScreenerClient()
+bot.load_extension("cogs.tticker")
 
-    async def on_ready(self):
-        pass
+bot.run(TOKEN)
 
-    async def on_message(self, message):
+# class Dexcord(discord.Client):
+#     dex = DexScreenerClient()
 
-        if message.author.guild_permissions.administrator:
+#     async def on_ready(self):
+#         pass
 
-            if message.content.startswith("!ticker"):
-                opts = message.content.split(" ")
-                print(opts)
+#     async def on_message(self, message):
 
-                if len(opts) < 3:
-                    await message.reply(
-                        "usage: !ticker <chainId> <pairAddress>", mention_author=True
-                    )
-                    return
+#         if message.author.guild_permissions.administrator:
 
-                chainId = opts[1]
-                pairAddress = opts[2]
+#             if message.content.startswith("!ticker"):
+#                 opts = message.content.split(" ")
+#                 print(opts)
 
-                r = self.dex.pairs(chainId, pairAddress)
+#                 if len(opts) < 3:
+#                     await message.reply(
+#                         "usage: !ticker <chainId> <pairAddress>", mention_author=True
+#                     )
+#                     return
 
-                await message.reply(
-                    f"The current price of {r.pair.baseToken.symbol} is ${r.pair.priceUsd}"
-                )
+#                 chainId = opts[1]
+#                 pairAddress = opts[2]
 
-                await self.change_presence(activity=discord.Game(f"${r.pair.priceUsd}"))
+#                 r = self.dex.pairs(chainId, pairAddress)
 
-                await message.guild.get_member(self.user.id).edit(
-                    nick=f"${r.pair.baseToken.symbol} -> $USD"
-                )
-                return
+#                 await message.reply(
+#                     f"The current price of {r.pair.baseToken.symbol} is ${r.pair.priceUsd}"
+#                 )
+
+#                 await self.change_presence(activity=discord.Game(f"${r.pair.priceUsd}"))
+
+#                 await message.guild.get_member(self.user.id).edit(
+#                     nick=f"${r.pair.baseToken.symbol} -> $USD"
+#                 )
+#                 return
 
 
-client = Dexcord()
-client.run(TOKEN)
+# client = Dexcord()
+# client.run(TOKEN)
