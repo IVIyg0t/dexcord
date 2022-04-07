@@ -7,7 +7,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 TOKEN = os.getenv("TOKEN")
-ADMIN_ID = os.getenv("ADMIN_ID")
 
 
 class Dexcord(discord.Client):
@@ -18,7 +17,7 @@ class Dexcord(discord.Client):
 
     async def on_message(self, message):
 
-        if message.author.id == int(ADMIN_ID):
+        if message.author.guild_permissions.administrator:
 
             if message.content.startswith("!ticker"):
                 opts = message.content.split(" ")
