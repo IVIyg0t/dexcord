@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 import os
-from pydex.dex import DexScreenerClient
+from pydexscreener.dex import DexScreenerClient
 from dotenv import load_dotenv
 
 load_dotenv()
