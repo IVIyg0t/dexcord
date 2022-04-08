@@ -36,12 +36,13 @@ class TTickerCog(commands.Cog):
 
         if ctx.author.guild_permissions.administrator:
             print("Admin command")
-            self.poll_ticker.stop()
-
             self.chain_id = chain_id
             self.pair_address = pair_address
+            r = self._get_pair()
 
-            self.poll_ticker.start()
+            self.poll_ticker.restart()
+
+            await self._reply_to_user(ctx, r)
 
     @tasks.loop(seconds=5.0)
     async def poll_ticker(self):
