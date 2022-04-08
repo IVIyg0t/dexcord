@@ -38,12 +38,13 @@ class TTickerCog(commands.Cog):
     async def poll_ticker(self):
         try:
             r = self._get_pair()
+
+            print(f"{r.pair.baseToken.symbol}: {r.pair.priceUsd}")
+            await self._update_nickname(r)
+            await self._update_presence(r)
+
         except:
             print("Error getting pair")
-
-        print(f"{r.pair.baseToken.symbol}: {r.pair.priceUsd}")
-        await self._update_nickname(r)
-        await self._update_presence(r)
 
     @poll_ticker.before_loop
     async def wait_for_bot(self):
