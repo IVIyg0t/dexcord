@@ -4,7 +4,7 @@ from discord.ext import commands, tasks
 from pydexscreener.dex import DexScreenerClient, PairsResponse
 
 
-class TTickerCog(commands.Cog):
+class SphereCog(commands.Cog):
     def __init__(self, bot):
         self.bot: commands.Bot = bot
         self.client = DexScreenerClient()
@@ -54,4 +54,4 @@ class TTickerCog(commands.Cog):
 
 def setup(bot):
     """Every cog needs a setup function like this."""
-    bot.add_cog(TTickerCog(bot))
+    bot.add_cog(SphereCog(bot))
