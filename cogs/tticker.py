@@ -40,7 +40,10 @@ class TTickerCog(commands.Cog):
 
     @tasks.loop(seconds=5.0)
     async def poll_ticker(self):
-        r = self._get_pair()
+        try:
+            r = self._get_pair()
+        except:
+            print("Error getting pair")
 
         print(f"{r.pair.baseToken.symbol}: {r.pair.priceUsd}")
         await self._update_nickname(r)
