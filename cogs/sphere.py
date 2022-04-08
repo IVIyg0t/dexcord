@@ -16,9 +16,6 @@ class TTickerCog(commands.Cog):
     def _get_pair(self):
         return self.client.pairs(self.chain_id, self.pair_address)
 
-    async def _update_presence(self, pair: PairsResponse):
-        await self.bot.change_presence(activity=discord.Game(f"${pair.pair.priceUsd}"))
-
     async def _reply_to_user(self, ctx, pair: PairsResponse):
         await ctx.send(
             f"The current price of {pair.pair.baseToken.symbol} is ${pair.pair.priceUsd}"
@@ -26,25 +23,18 @@ class TTickerCog(commands.Cog):
 
     async def _update_nickname(self, pair: PairsResponse):
         await self.bot.guilds[0].get_member(self.bot.user.id).edit(
-            nick=f"${pair.pair.baseToken.symbol} -> $USD"
+            nick=f"${pair.pair.priceUsd}"
         )
 
-    @commands.command(name="tticker")
-    async def t_ticker(self, ctx, chain_id: Optional[str], pair_address: Optional[str]):
-        if not chain_id or not pair_address:
-            await ctx.send("Usage: !tticker <chain_id> <pair_address>")
+    async def _update_presence(self, pair: PairsResponse):
+        await self.bot.change_presence(activity=discord.Game(f"$SPHERE"))
 
-        if ctx.author.guild_permissions.administrator:
-            print("Admin command")
-            self.chain_id = chain_id
-            self.pair_address = pair_address
-            r = self._get_pair()
+    @commands.command(name="sphere")
+    async def sphere(self, ctx):
+        r = self._get_pair()
+        await self._reply_to_user(ctx, r)
 
-            self.poll_ticker.restart()
-
-            await self._reply_to_user(ctx, r)
-
-    @tasks.loop(seconds=5.0)
+    @tasks.loop(seconds=10.0)
     async def poll_ticker(self):
         try:
             r = self._get_pair()
