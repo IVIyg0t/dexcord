@@ -35,8 +35,13 @@ class TTickerCog(commands.Cog):
             await ctx.send("Usage: !tticker <chain_id> <pair_address>")
 
         if ctx.author.guild_permissions.administrator:
+            print("Admin command")
+            self.poll_ticker.stop()
+
             self.chain_id = chain_id
             self.pair_address = pair_address
+
+            self.poll_ticker.start()
 
     @tasks.loop(seconds=5.0)
     async def poll_ticker(self):
