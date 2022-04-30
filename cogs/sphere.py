@@ -9,7 +9,7 @@ class SphereCog(commands.Cog):
         self.bot: commands.Bot = bot
         self.client = DexScreenerClient()
         self.chain_id = "polygon"
-        self.pair_address = "0xf305242c46Cfa2A07965eFBD68B167C99173B496"
+        self.pair_address = "0x8eA5597aDDD0747EA6004FBD5A7700bCF9dAa0Ea"
 
         self.poll_ticker.start()
 
