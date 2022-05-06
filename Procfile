@@ -1,1 +1,1 @@
-worker: python dexcord.py
+worker: npm start
