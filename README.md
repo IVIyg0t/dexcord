@@ -1,3 +1,5 @@
+[![Deploy](https://github.com/IVIyg0t/dexcord/actions/workflows/main.yml/badge.svg)](https://github.com/IVIyg0t/dexcord/actions/workflows/main.yml)
+
 <div>
   <p align="center">
     <a href="https://discord-ts.js.org" target="_blank" rel="nofollow">
