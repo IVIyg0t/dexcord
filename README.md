@@ -1,35 +1,53 @@
-# Dexcord
+<div>
+  <p align="center">
+    <a href="https://discord-ts.js.org" target="_blank" rel="nofollow">
+      <img src="https://discord-ts.js.org/discord-ts.svg" width="546" />
+    </a>
+  </p>
+  <p align="center">
+    <a href="https://discord-ts.js.org/discord"
+      ><img
+        src="https://img.shields.io/discord/874802018361950248?color=5865F2&logo=discord&logoColor=white"
+        alt="Discord server"
+    /></a>
+    <a href="https://www.npmjs.com/package/discordx"
+      ><img
+        src="https://img.shields.io/npm/v/discordx.svg?maxAge=3600"
+        alt="NPM version"
+    /></a>
+    <a href="https://www.npmjs.com/package/discordx"
+      ><img
+        src="https://img.shields.io/npm/dt/discordx.svg?maxAge=3600"
+        alt="NPM downloads"
+    /></a>
+    <a href="https://github.com/oceanroleplay/discord.ts/actions"
+      ><img
+        src="https://github.com/oceanroleplay/discord.ts/workflows/Build/badge.svg"
+        alt="Build status"
+    /></a>
+    <a href="https://www.paypal.me/vijayxmeena"
+      ><img
+        src="https://img.shields.io/badge/donate-paypal-F96854.svg"
+        alt="paypal"
+    /></a>
+  </p>
+  <p align="center">
+    <b> Create a discord bot with TypeScript and Decorators! </b>
+  </p>
+</div>
 
-A Discord bot for Dexscreener.
+# 📜 Documentation
 
-## Setup
+> **[discord-ts.js.org](https://discord-ts.js.org)**
 
-Install requirements:
+> **[Tutorials (dev.to)](https://dev.to/oceanroleplay/series/14317)**
 
-`pip install -r requirements.txt`
+# ☎️ Need help?
 
-Create a `.env` file:
+- [Check frequently asked questions](https://discord-ts.js.org/docs/faq)
+- [Check examples](https://github.com/oceanroleplay/discord.ts/tree/main/packages/discordx/examples)
+- Ask in **[discord server](https://discord-ts.js.org/discord)**
 
-`touch .env`
+# Thank you
 
-Add your Discord bot's Token to the env file:
-
-`TOKEN=abc123lalalookatme`
-
-## Commands
-
-Get the current price of SPHERE with `!sphere`.
-
-```
-$0.04414 BOT
- — Yesterday at 9:35 PM
-The current price of SPHERE is $0.05008
-```
-
-## Extending Capabilities
-
-If you'd like to add a new command to this bot, simply create a new cog under the `/cogs` directory. Use the existing `sphere` cog as a guide.
-
-Once your cog is created, simply load it in `dexcord.py` using:
-
-`bot.load_extension("cogs.<your_cog_name>")`
+Show your support for [discordx](https://www.npmjs.com/package/discordx) by giving us a star on [github](https://github.com/oceanroleplay/discord.ts).
