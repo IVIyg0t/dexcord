@@ -69,13 +69,21 @@ export class TrackerCommand {
   ) {
     if (freq === 0) this.trackerFrequency = this.DEFAULT_TRACKER_CYCLE_RATE;
     else this.trackerFrequency = freq * 1000;
-    i.reply(`Set tracking frequency to ${this.trackerFrequency / 1000}s`);
+    i.reply({
+      content: `Set tracking frequency to ${this.trackerFrequency / 1000}s`,
+      ephemeral: true,
+    });
   }
 
   @Slash("frequency")
   @SlashGroup("get", "tracker")
   async getFrequency(i: CommandInteraction) {
-    i.reply(`Tracking frequency is currently ${this.trackerFrequency / 1000}s`);
+    i.reply({
+      content: `Tracking frequency is currently ${
+        this.trackerFrequency / 1000
+      }s`,
+      ephemeral: true,
+    });
   }
 
   @Slash("show")
@@ -91,7 +99,7 @@ export class TrackerCommand {
 
     await this.cycleStats(i.client as Client, selectedType);
 
-    i.reply("Stats updated!");
+    i.reply({ content: "Stats updated!", ephemeral: true });
   }
 
   @Slash("describe")
@@ -124,7 +132,7 @@ export class TrackerCommand {
       );
     });
 
-    i.reply(`\`\`\`${table.toString()}\`\`\``);
+    i.reply({ content: `\`\`\`${table.toString()}\`\`\``, ephemeral: true });
   }
 
   @Slash("add")
@@ -143,13 +151,19 @@ export class TrackerCommand {
         i.guild as Guild
       );
 
-      if (tracker) i.reply(`Created tracker: ${tracker.symbol}`);
+      if (tracker)
+        i.reply({
+          content: `Created tracker: ${tracker.symbol}`,
+          ephemeral: true,
+        });
       else i.reply(`Oops! Something went wrong...`);
     } catch (e) {
       console.log(e);
-      i.reply(
-        "Hmm... Looks like an error occured.  Check your chainid and pair address."
-      );
+      i.reply({
+        content:
+          "Hmm... Looks like an error occured.  Check your chainid and pair address.",
+        ephemeral: true,
+      });
     }
   }
 
@@ -166,16 +180,19 @@ export class TrackerCommand {
     const channel = this.getChannel(tracker?.id as string, i.guild as Guild);
     await channel?.delete();
 
-    i.reply(`
+    i.reply({
+      content: `
       Removed: ${tracker?.symbol}
-    `);
+    `,
+      ephemeral: true,
+    });
   }
 
   @Slash("refresh")
   @SlashGroup("tracker")
   async refreshTrackers(i: CommandInteraction) {
     await this.refresh(i.guild as Guild);
-    await i.reply("Refresh complete");
+    await i.reply({ content: "Refresh complete", ephemeral: true });
   }
 
   async refresh(guild: Guild) {
