@@ -1,5 +1,4 @@
 import PairsResponse from "dexscreener-api/dist/types/PairsResponse";
-import { Guild } from "discord.js";
 import { Sequelize, DataTypes, Model, Op } from "sequelize";
 
 const db = new Sequelize({

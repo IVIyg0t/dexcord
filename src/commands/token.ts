@@ -42,13 +42,40 @@ const StatsTypes = [
 
 @Discord()
 @SlashGroup({ name: "tracker" })
+// @SlashGroup({ name: "frequency", root: "tracker" })
+@SlashGroup({ name: "get", root: "tracker" })
+@SlashGroup({ name: "set", root: "tracker" })
 export class TrackerCommand {
+  DEFAULT_TRACKER_CYCLE_RATE = 60000;
+  trackerFrequency: number = this.DEFAULT_TRACKER_CYCLE_RATE;
+
   @On("ready")
   async onReady(params: any, client: Client, guardPayload: any) {
     // Refresh token pairs
     setInterval(() => {
       this.updatePairs(client as Client);
-    }, TOKEN_REFRESH_RATE);
+    }, this.trackerFrequency);
+  }
+
+  @Slash("frequency")
+  @SlashGroup("set", "tracker")
+  async setFrequency(
+    @SlashOption("freq", {
+      description:
+        "What should the frequency (in seconds) be for pulling new prices?  Set 0 for default (60s).",
+    })
+    freq: number,
+    i: CommandInteraction
+  ) {
+    if (freq === 0) this.trackerFrequency = this.DEFAULT_TRACKER_CYCLE_RATE;
+    else this.trackerFrequency = freq * 1000;
+    i.reply(`Set tracking frequency to ${this.trackerFrequency / 1000}s`);
+  }
+
+  @Slash("frequency")
+  @SlashGroup("get", "tracker")
+  async getFrequency(i: CommandInteraction) {
+    i.reply(`Tracking frequency is currently ${this.trackerFrequency / 1000}s`);
   }
 
   @Slash("show")
