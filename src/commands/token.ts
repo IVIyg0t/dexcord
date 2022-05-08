@@ -234,6 +234,8 @@ export class TrackerCommand {
         const chainId = tracker.chainId;
         const pairAddress = tracker.pairAddress;
         const pair = await getPairInformationByChain(chainId, pairAddress);
+        console.log("Info From API");
+        console.log(`$${pair.pair.baseToken.symbol}: $${pair.pair.priceUsd}`);
         tracker.update("pair", pair).then((newTracker) => {
           console.log(newTracker.pair.pair.priceUsd);
           this.updateTracker(client, newTracker);
