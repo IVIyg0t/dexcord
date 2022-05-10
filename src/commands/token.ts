@@ -102,6 +102,29 @@ export class TrackerCommand {
     i.reply({ content: "Stats updated!", ephemeral: true });
   }
 
+  @Slash("db")
+  @SlashGroup("get", "tracker")
+  async db(i: CommandInteraction) {
+    const trackers = await Tracker.findAll();
+
+    const table = new AsciiTable("DB");
+    table
+      .setHeading("ID", "Guild ID", "symbol", "priceUsd", "pairAddress")
+      .removeBorder();
+
+    trackers.forEach((t) => {
+      table.addRow(
+        t.id,
+        t.guildId,
+        t.symbol,
+        t.pair?.pair?.priceUsd,
+        t.pairAddress
+      );
+    });
+
+    i.reply({ content: `\`\`\`${table.toString()}\`\`\``, ephemeral: true });
+  }
+
   @Slash("describe")
   @SlashGroup("tracker")
   async describe(i: CommandInteraction) {
