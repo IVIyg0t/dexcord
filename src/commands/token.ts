@@ -42,7 +42,6 @@ const StatsTypes = [
 
 @Discord()
 @SlashGroup({ name: "tracker" })
-// @SlashGroup({ name: "frequency", root: "tracker" })
 @SlashGroup({ name: "get", root: "tracker" })
 @SlashGroup({ name: "set", root: "tracker" })
 export class TrackerCommand {
@@ -268,10 +267,14 @@ export class TrackerCommand {
   }
 
   async updateTracker(client: Client, tracker: Tracker) {
-    const channel = (await client.channels.fetch(tracker.id)) as VoiceChannel;
-    const newChannel = await channel.setName(
-      this.makeChannelName(tracker.pair)
-    );
+    try {
+      const channel = (await client.channels.fetch(tracker.id)) as VoiceChannel;
+      const newChannel = await channel.setName(
+        this.makeChannelName(tracker.pair)
+      );
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async cycleStats(client: Client, statsType: StatsNameType) {
