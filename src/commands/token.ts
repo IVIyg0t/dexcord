@@ -174,7 +174,10 @@ export class TrackerCommand {
     symbol: string,
     i: CommandInteraction
   ) {
+    console.log(`Finding tracker ${symbol}`);
     const tracker = await Tracker.findOneBySymbol(symbol);
+
+    console.log(tracker);
     await tracker?.destroy();
 
     const channel = this.getChannel(tracker?.id as string, i.guild as Guild);
