@@ -120,7 +120,7 @@ export class TrackerCommand {
       .setAlign(6, AsciiTable.CENTER);
 
     _.zip(channels, trackers).forEach(([ch, t]) => {
-      const { m5, h1, h6, h24 } = t?.pair.pair.priceChange as any;
+      const { m5, h1, h6, h24 } = t?.pair?.pair?.priceChange as any;
       table.addRow(
         t?.id,
         ch?.id,
