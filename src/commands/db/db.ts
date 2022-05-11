@@ -1,5 +1,6 @@
-import PairsResponse from "dexscreener-api/dist/types/PairsResponse";
-import { Sequelize, DataTypes, Model, Op } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
+import { Tracker } from "./tracker";
+import { Guild } from "./guild";
 
 const db = new Sequelize({
   dialect: "sqlite",
@@ -13,50 +14,39 @@ try {
   console.error("Unable to connect to the database:", error);
 }
 
-export class Tracker extends Model {
-  declare id: string;
-  declare guildId: string;
-  declare chainId: string;
-  declare pairAddress: string;
-  declare symbol: string;
-  declare pair: PairsResponse;
-
-  static findBySymbol(symbol: string) {
-    const trackers = Tracker.findAll({
-      where: {
-        symbol: {
-          [Op.like]: symbol,
-        },
-      },
-    });
-    return trackers;
-  }
-
-  static findOneBySymbol(symbol: string) {
-    const tracker = Tracker.findOne({
-      where: {
-        symbol: {
-          [Op.like]: symbol,
-        },
-      },
-    });
-    return tracker;
-  }
-}
-
-Tracker.init(
+Guild.init(
   {
-    // Model attributes are defined here
     id: {
-      type: DataTypes.STRING,
-      allowNull: false,
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
     },
     guildId: {
       type: DataTypes.STRING,
       allowNull: false,
-      // allowNull defaults to true
     },
+  },
+  { sequelize: db }
+);
+
+Tracker.init(
+  {
+    // Model attributes are defined here
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
+    channelId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    // guildId: {
+    //   type: DataTypes.STRING,
+    //   allowNull: false,
+    //   // allowNull defaults to true
+    // },
     chainId: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -77,4 +67,8 @@ Tracker.init(
   { sequelize: db }
 );
 
+Guild.hasMany(Tracker);
+Tracker.belongsTo(Guild);
+
+Guild.sync();
 Tracker.sync();
