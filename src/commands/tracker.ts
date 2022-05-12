@@ -154,14 +154,11 @@ export class TrackerCommands extends BaseCommand {
     const trackers = await guild.getTrackers();
 
     const table = new AsciiTable("DB");
-    table
-      .setHeading("ID", "Guild ID", "symbol", "priceUsd", "pairAddress")
-      .removeBorder();
+    table.setHeading("ID", "symbol", "priceUsd", "pairAddress").removeBorder();
 
-    trackers.forEach(async (t) => {
+    trackers.forEach((t) => {
       table.addRow(
         t.channelId,
-        (await t.getGuild()).guildId,
         t.symbol,
         t.pair?.pair?.priceUsd,
         t.pairAddress
