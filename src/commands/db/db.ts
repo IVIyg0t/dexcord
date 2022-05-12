@@ -2,10 +2,7 @@ import { Sequelize, DataTypes } from "sequelize";
 import { Tracker } from "./tracker";
 import { Guild } from "./guild";
 
-const db = new Sequelize({
-  dialect: "sqlite",
-  storage: "database.sqlite",
-});
+const db = new Sequelize(process.env.DATABASE_URL as string);
 
 try {
   await db.authenticate();
@@ -42,11 +39,6 @@ Tracker.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    // guildId: {
-    //   type: DataTypes.STRING,
-    //   allowNull: false,
-    //   // allowNull defaults to true
-    // },
     chainId: {
       type: DataTypes.STRING,
       allowNull: false,
