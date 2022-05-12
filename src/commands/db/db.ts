@@ -2,8 +2,16 @@ import { Sequelize, DataTypes } from "sequelize";
 import { Tracker } from "./tracker";
 import { Guild } from "./guild";
 
-const db = new Sequelize(process.env.DATABASE_URL as string);
-
+const db = new Sequelize(process.env.DATABASE_URL as string, {
+  dialect: "postgres",
+  protocol: "postgres",
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false,
+    },
+  },
+});
 try {
   await db.authenticate();
   console.log("Connection has been established successfully.");
