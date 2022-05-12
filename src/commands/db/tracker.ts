@@ -1,14 +1,17 @@
 import PairsResponse from "dexscreener-api/dist/types/PairsResponse";
-import { Model, Op } from "sequelize";
+import { BelongsToGetAssociationMixin, Model, Op } from "sequelize";
+import { Guild } from "./guild";
 
 export class Tracker extends Model {
   declare id: number;
   declare channelId: string;
-  declare guildId: number;
+  declare GuildId: number;
   declare chainId: string;
   declare pairAddress: string;
   declare symbol: string;
   declare pair: PairsResponse;
+
+  declare getGuild: BelongsToGetAssociationMixin<Guild>;
 
   static async findByChannelId(id: string) {
     return Tracker.findAll({

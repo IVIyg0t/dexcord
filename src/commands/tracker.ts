@@ -158,10 +158,10 @@ export class TrackerCommands extends BaseCommand {
       .setHeading("ID", "Guild ID", "symbol", "priceUsd", "pairAddress")
       .removeBorder();
 
-    trackers.forEach((t) => {
+    trackers.forEach(async (t) => {
       table.addRow(
         t.channelId,
-        t.guildId,
+        (await t.getGuild()).guildId,
         t.symbol,
         t.pair?.pair?.priceUsd,
         t.pairAddress
